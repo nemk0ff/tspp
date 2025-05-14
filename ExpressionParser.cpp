@@ -111,6 +111,23 @@ void ExpressionParser::V() {
             value_t x = values.top();
             values.pop();
             values.push(sin(x));
+        } else if (s[cur_index] == 'q') {
+            if (s[++cur_index] != 'r') {
+                throw "unknown operation at index " + std::to_string(cur_index);
+            }
+            if (s[++cur_index] != 't') {
+                throw "unknown operation at index " + std::to_string(cur_index);
+            }
+            if (s[++cur_index] != '(') {
+                throw "parenthesis not found at index " + std::to_string(cur_index);
+            }
+            V();
+
+            value_t x = values.top();
+            values.pop();
+            values.push(sqrt(x));
+        } else {
+            throw "unknown operation at index " + std::to_string(cur_index);
         }
     } else if (s[cur_index] == 'c') { // cos, ctg
         cur_index++;
@@ -200,6 +217,44 @@ void ExpressionParser::V() {
         } else {
             throw "unknown operation at index " + std::to_string(cur_index);
         }
+    } else if (s[cur_index] == 'l') { // ln, lg
+        cur_index++;
+        if (s[cur_index] == 'n') {
+            if (s[++cur_index] != '(') {
+                throw "parenthesis not found at index " + std::to_string(cur_index);
+            }
+            V();
+
+            value_t x = values.top();
+            values.pop();
+            values.push(log(x));
+        } else if (s[cur_index] == 'g') {
+            if (s[++cur_index] != '(') {
+                throw "parenthesis not found at index " + std::to_string(cur_index);
+            }
+            V();
+
+            value_t x = values.top();
+            values.pop();
+            values.push(log10(x));
+        } else {
+            throw "unknown operation at index " + std::to_string(cur_index);
+        }
+    } else if (s[cur_index] == 'e') { // exp
+        if (s[++cur_index] != 'x') {
+            throw "unknown operation at index " + std::to_string(cur_index);
+        }
+        if (s[++cur_index] != 'p') {
+            throw "unknown operation at index " + std::to_string(cur_index);
+        }
+        if (s[++cur_index] != '(') {
+            throw "parenthesis not found at index " + std::to_string(cur_index);
+        }
+        V();
+
+        value_t x = values.top();
+        values.pop();
+        values.push(exp(x));
     } else if (s[cur_index] == '(') {
         cur_index++;
         bool unary_minus = false;

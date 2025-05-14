@@ -22,6 +22,43 @@ value_t taylor_series_calc(std::function<value_t(int)> koef, value_t x, int cnt 
     return result;
 }
 
+value_t exp(value_t x) {
+    return taylor_series_calc([](int k) { return 1.0L / factorial(k); }, x);
+}
+
+value_t log(value_t x) {
+    if (x < 0) {
+        throw "log of negative";
+    }
+
+    value_t result = 0;
+    while (x > 1.9) {
+        x /= 2;
+        result += LN2;
+    }
+
+    while (x < 0.1) {
+        x *= 2;
+        result -= LN2;
+    }
+
+    result += taylor_series_calc(
+            [](int k) {
+                if (k == 0) {
+                    return 0.0L;
+                }
+
+                value_t res = (k % 2 != 0 ? 1 : -1);
+                res *= 1.0L / k;
+                return res;
+            },
+            x - 1);
+
+    return result;
+}
+
+value_t log10(value_t x) { return log(x) / log(10); }
+
 value_t bpow(value_t x, long long n) {
     if (n == 0) {
         return 1;
