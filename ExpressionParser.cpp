@@ -51,10 +51,12 @@ void ExpressionParser::S() {
 }
 
 void ExpressionParser::M() {
+    P();
     while (cur_index < s.size()) {
         char c = s[cur_index];
         if (c == '*' or c == '/') {
             cur_index++;
+            P();
 
             value_t r = values.top();
             values.pop();
@@ -75,6 +77,22 @@ void ExpressionParser::M() {
         } else {
             return;
         }
+    }
+}
+
+void ExpressionParser::P() {
+    V();
+    if (s[cur_index] == '^') {
+        cur_index++;
+        P();
+
+        value_t r = values.top();
+        values.pop();
+        value_t l = values.top();
+        values.pop();
+
+        value_t res = pow(l, r);
+        values.push(res);
     }
 }
 

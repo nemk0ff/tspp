@@ -33,6 +33,23 @@ value_t bpow(value_t x, long long n) {
     return b;
 }
 
+value_t pow(value_t base, value_t exponent) {
+    if (base < -EPS && abs(exponent - 1.0L * static_cast<long long>(exponent)) > EPS) {
+        throw "invalid power base";
+    }
+    if (abs(base) < EPS && exponent < EPS) {
+        throw "negative power of zero";
+    }
+
+    if (abs(exponent - 1.0L * static_cast<long long>(exponent)) < EPS) {
+        return bpow(base, static_cast<long long>(exponent));
+    }
+
+    return exp(log(base) * exponent);
+}
+
+value_t sqrt(value_t x) { return pow(x, 1.0L / 2); }
+
 value_t trig_arg_reduce(value_t x) {
     while (abs(x) - 2 * PI > 0) {
         value_t k = 1.0L * static_cast<long long>(abs(x) / (2 * PI));

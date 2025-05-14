@@ -9,10 +9,11 @@ class ExpressionParser {
     std::string s;
     std::stack <value_t> values;
 
-    void S();
-    void M();
-    void V();
-    void D();
+    void S(); // sum
+    void M(); // multiply
+    void P(); // power
+    void V(); // value
+    void D(); // digit
 public:
     long double parse(const std::string &s_);
 };
