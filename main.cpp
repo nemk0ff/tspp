@@ -12,10 +12,10 @@ int main() {
 
     try {
         std::cout << p.parse(s) << std::endl;
-    } catch (const char* s) {
+    } catch (const char *s) {
         std::cerr << s << std::endl;
         std::cout << "Error." << std::endl;
-    } catch (std::string& s) {
+    } catch (std::string &s) {
         std::cerr << s << std::endl;
         std::cout << "Error." << std::endl;
     }

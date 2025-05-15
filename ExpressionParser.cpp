@@ -1,6 +1,6 @@
 #include "ExpressionParser.h"
 
-void replace_all(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
+void replace_all(std::string &s, std::string const &toReplace, std::string const &replaceWith) {
     std::string buf;
     std::size_t pos = 0;
     std::size_t prevPos;
@@ -298,7 +298,7 @@ void ExpressionParser::D() {
     values.push(res);
 }
 
-long double ExpressionParser::parse(const std::string& s_) {
+long double ExpressionParser::parse(const std::string &s_) {
     s = "(" + s_ + ")";
     replace_all(s, " ", "");
     cur_index = 0;

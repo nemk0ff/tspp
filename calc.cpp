@@ -1,10 +1,14 @@
 #include "calc.h"
 #include <functional>
 
-constexpr value_t PI = 3.141592653589793238462643383279;
-constexpr value_t LN2 = 0.693147180559945309417232121458;
+constexpr value_t
+PI = 3.141592653589793238462643383279;
+constexpr value_t
+LN2 = 0.693147180559945309417232121458;
 
-constexpr value_t factorial(int n) { return (n == 0 ? 1 : factorial(n - 1) * n); }
+constexpr value_t
+
+factorial(int n) { return (n == 0 ? 1 : factorial(n - 1) * n); }
 
 value_t my_abs(value_t x) { return (x < 0 ? -x : x); }
 
@@ -39,16 +43,16 @@ value_t log(value_t x) {
     }
 
     result += taylor_series_calc(
-        [](int k) {
-            if (k == 0) {
-                return 0.0L;
-            }
+            [](int k) {
+                if (k == 0) {
+                    return 0.0L;
+                }
 
-            value_t res = (k % 2 != 0 ? 1 : -1);
-            res *= 1.0L / k;
-            return res;
-        },
-        x - 1);
+                value_t res = (k % 2 != 0 ? 1 : -1);
+                res *= 1.0L / k;
+                return res;
+            },
+            x - 1);
 
     return result;
 }
@@ -111,64 +115,65 @@ value_t trig_arg_reduce(value_t x) {
 value_t sin(value_t x) {
     x = trig_arg_reduce(x);
     return taylor_series_calc(
-        [](int k) {
-            if (k % 2 == 0) {
-                return 0.0L;
-            }
+            [](int k) {
+                if (k % 2 == 0) {
+                    return 0.0L;
+                }
 
-            value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
-            res *= 1.0L / factorial(k);
-            return res;
-        },
-        x);
+                value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
+                res *= 1.0L / factorial(k);
+                return res;
+            },
+            x);
 }
 
 value_t cos(value_t x) {
     x = trig_arg_reduce(x);
     return taylor_series_calc(
-        [](int k) {
-            if (k % 2 == 1) {
-                return 0.0L;
-            }
+            [](int k) {
+                if (k % 2 == 1) {
+                    return 0.0L;
+                }
 
-            value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
-            res *= 1.0L / factorial(k);
-            return res;
-        },
-        x);
+                value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
+                res *= 1.0L / factorial(k);
+                return res;
+            },
+            x);
 }
 
 value_t tan(value_t x) { return sin(x) / cos(x); }
 
 value_t asin(value_t x) {
     return taylor_series_calc(
-        [](int k) {
-            if (k == 1) {
-                return 1.0L;
-            } else if (k == 3) {
-                return 1.0L / 6;
-            } else if (k == 5) {
-                return 3.0L / 40;
-            } else if (k == 7) {
-                return 5.0L / 112;
-            }
+            [](int k) {
+                if (k == 1) {
+                    return 1.0L;
+                } else if (k == 3) {
+                    return 1.0L / 6;
+                } else if (k == 5) {
+                    return 3.0L / 40;
+                } else if (k == 7) {
+                    return 5.0L / 112;
+                }
 
-            return 0.0L;
-        },
-        x);
+                return 0.0L;
+            },
+            x);
 }
 
 value_t acos(value_t x) { return PI / 2 - asin(x); }
+
 value_t atan(value_t x) {
     return taylor_series_calc(
-        [](int k) {
-            if (k % 2 == 1) {
-                return 0.0L;
-            }
+            [](int k) {
+                if (k % 2 == 1) {
+                    return 0.0L;
+                }
 
-            value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
-            res *= 1.0L / k;
-            return res;
-        },
-        x);
+                value_t res = ((k / 2) % 2 == 0 ? 1 : -1);
+                res *= 1.0L / k;
+                return res;
+            },
+            x);
 }
