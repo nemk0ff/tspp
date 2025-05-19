@@ -30,5 +30,5 @@ runtest: test
 run: calc
 	./calc
 
-clean:	
+clean:
 	rm -rf *.o *. exe calc leak_test test

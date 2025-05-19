@@ -74,13 +74,13 @@ TEST_F(ExpressionParserTest, InvalidInputException) {
 }
 
 
-//int main(int argc, char** argv) {
-//    ::testing::InitGoogleTest(&argc, argv);
-//    int result = RUN_ALL_TESTS();
-//    if (result!= 0) {
-//        std::cout << "Tests failed." << std::endl;
-//    } else {
-//        std::cout << "All tests passed." << std::endl;
-//    }
-//    return result;
-//}
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    int result = RUN_ALL_TESTS();
+    if (result!= 0) {
+        std::cout << "Tests failed." << std::endl;
+    } else {
+        std::cout << "All tests passed." << std::endl;
+    }
+    return result;
+}
