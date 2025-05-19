@@ -4,18 +4,21 @@
 #include <string>
 #include "math.h"
 
-// парсер и определитель математических выражений
 class ExpressionParser {
     size_t cur_index;
     std::string s;
-    std::stack<value_t> values;  // для хранения промежуточных значений вычислений
+    std::stack<value_t> values;
 
-    // методы для обработки:
-    void S(); // сложения и вычитания
-    void M(); // умножения и деления
-    void P(); // возведения в степень
-    void V(); // значений (функции, скобки, числа)
-    void D(); // цифр (целых и дробных чисел)
+    void S(bool unary_minus = false);
+
+    void M();
+
+    void P();
+
+    void V();
+
+    void D();
+
 public:
     long double parse(const std::string &s_);
 };
