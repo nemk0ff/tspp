@@ -12,7 +12,7 @@ astra-build:
   stage: build
   script:
     - cd googletest
-    - cmake -S . -B build
+    - cmake -S -B build
     - cd build
     - make -j 4
     - cd ../../
@@ -22,6 +22,7 @@ astra-build:
     paths:
       - ./calc
       - ./test
+      - ./leak_test
     expire_in: 1 week
   tags:
     - astra
