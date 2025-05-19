@@ -12,7 +12,7 @@ astra-build:
   stage: build
   script:
     - cd googletest
-    - cmake -S -B build
+    - cmake -S . -B build
     - cd build
     - make -j 4
     - cd ../../
