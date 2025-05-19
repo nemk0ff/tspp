@@ -1,0 +1,27 @@
+stages:
+    - build
+    - test
+    - deploy
+    - docs
+    - build-pack
+    - test-pack
+
+astra-build:
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  stage: build
+  script:
+    - cd googletest
+    - cmake -S . -B build
+    - cd build
+    - make -j 4
+    - cd ../../
+    - make all
+  artifacts:
+    name: "astra_build_result"
+    paths:
+      - ./calc
+      - ./test
+    expire_in: 1 week
+  tags:
+    - astra
