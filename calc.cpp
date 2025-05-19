@@ -1,14 +1,11 @@
 #include "calc.h"
 #include <functional>
+#include "math.h"
 
-constexpr value_t
-PI = 3.141592653589793238462643383279;
-constexpr value_t
-LN2 = 0.693147180559945309417232121458;
+constexpr value_t PI = 3.141592653589793238462643383279;
+constexpr value_t LN2 = 0.693147180559945309417232121458;
 
-constexpr value_t
-
-factorial(int n) { return (n == 0 ? 1 : factorial(n - 1) * n); }
+constexpr value_t factorial(int n) { return (n == 0 ? 1 : factorial(n - 1) * n); }
 
 value_t my_abs(value_t x) { return (x < 0 ? -x : x); }
 
@@ -27,7 +24,7 @@ value_t exp(value_t x) {
 }
 
 value_t log(value_t x) {
-    if (x < 0) {
+    if (x < EPS) {
         throw "log of negative";
     }
 
@@ -74,8 +71,13 @@ value_t pow(value_t base, value_t exponent) {
     if (base < -EPS && abs(exponent - 1.0L * static_cast<long long>(exponent)) > EPS) {
         throw "invalid power base";
     }
+
     if (abs(base) < EPS && exponent < EPS) {
         throw "negative power of zero";
+    }
+
+    if (abs(base) < EPS) {
+        return 0.0L;
     }
 
     if (abs(exponent - 1.0L * static_cast<long long>(exponent)) < EPS) {
@@ -144,30 +146,10 @@ value_t cos(value_t x) {
 
 value_t tan(value_t x) { return sin(x) / cos(x); }
 
-value_t asin(value_t x) {
-    return taylor_series_calc(
-            [](int k) {
-                if (k == 1) {
-                    return 1.0L;
-                } else if (k == 3) {
-                    return 1.0L / 6;
-                } else if (k == 5) {
-                    return 3.0L / 40;
-                } else if (k == 7) {
-                    return 5.0L / 112;
-                }
-
-                return 0.0L;
-            },
-            x);
-}
-
-value_t acos(value_t x) { return PI / 2 - asin(x); }
-
 value_t atan(value_t x) {
     return taylor_series_calc(
             [](int k) {
-                if (k % 2 == 1) {
+                if (k % 2 == 0) {
                     return 0.0L;
                 }
 
@@ -175,5 +157,9 @@ value_t atan(value_t x) {
                 res *= 1.0L / k;
                 return res;
             },
-            x);
+            x, 5000000);
 }
+
+value_t asin(value_t x) { return 2 * atan(x / (1 + sqrt(1 - x * x))); }
+
+value_t acos(value_t x) { return PI / 2 - asin(x); }
