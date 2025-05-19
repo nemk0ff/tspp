@@ -1,6 +1,5 @@
-#include "calc.h"
-#include <functional>
 #include "math.h"
+#include <functional>
 
 constexpr value_t PI = 3.141592653589793238462643383279;
 constexpr value_t LN2 = 0.693147180559945309417232121458;

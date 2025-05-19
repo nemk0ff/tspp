@@ -2,7 +2,7 @@
 
 #include <stack>
 #include <string>
-#include "calc.h"
+#include "math.h"
 
 // парсер и определитель математических выражений
 class ExpressionParser {

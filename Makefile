@@ -12,16 +12,16 @@ calc: main.o calc.o ExpressionParser.o
 main.o: main.cpp
 	g++ -c main.cpp
 
-calc.o: calc.cpp
+calc.o: math.cpp
 	g++ -c calc.cpp
 
 ExpressionParser.o: ExpressionParser.cpp
 	g++ -c ExpressionParser.cpp
 
-test: test.cpp calc.cpp
+test: test.cpp math.cpp
 	g++ test.cpp calc.cpp ExpressionParser.cpp -o test -I$(GTEST_INCLUDE) -L$(GTEST_LIB_PATH) $(GTEST_LFLAGS)
 
-leak_test: test.cpp calc.cpp
+leak_test: test.cpp math.cpp
 	g++ -g test.cpp calc.cpp ExpressionParser.cpp -o leak_test -fsanitize=address -I$(GTEST_INCLUDE) -L$(GTEST_LIB_PATH) $(GTEST_LFLAGS)
 
 runtest: test
