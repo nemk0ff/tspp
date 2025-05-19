@@ -3,6 +3,8 @@
 using value_t = long double;
 constexpr value_t EPS = 1e-10;
 
+#define abs my_abs
+
 value_t my_abs(value_t x);
 
 value_t exp(value_t x);
