@@ -162,7 +162,7 @@ redos-deploy:
     - job: 'redos-leak-test'
     - job: 'redos-unit-test'
   script:
-    - ./cacl
+    - ./calc
   artifacts:
     name: "redos-deploy-result"
     paths:
