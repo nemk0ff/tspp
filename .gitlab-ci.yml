@@ -31,7 +31,7 @@ astra-unit-test:
   stage: test
   dependencies:
     - astra-build
-  needs: ["astra-build"]
+  needs: [ "astra-build" ]
   script:
     - ./test --gtest_output="xml:report.xml"
   artifacts:
@@ -39,5 +39,15 @@ astra-unit-test:
     name: "astra_test_results"
     paths:
       - ./report.xml
+  tags:
+    - astra
+
+astra-leak-test:
+  stage: test
+  dependencies:
+    - astra-build
+  needs: [ "astra-buld" ]
+  script:
+    - ./leak_test
   tags:
     - astra
