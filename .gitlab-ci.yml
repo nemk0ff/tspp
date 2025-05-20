@@ -105,3 +105,24 @@ astra-package-test:
     - calc
   tags:
     - astra
+
+redos-build:
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  stage: build
+  script:
+    - cd googletest
+    - cmake -S . build
+    - cd build
+    - make -j 4
+    - cd ../../
+    - make all
+  artifacts:
+    name: "redos_build_result"
+    paths:
+      - ./calc
+      - ./test
+      - ./leak_test
+    expire_in: 1 week
+  tags:
+    - redos
