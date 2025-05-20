@@ -51,3 +51,20 @@ astra-leak-test:
     - ./leak_test
   tags:
     - astra
+
+astra-deploy:
+  stage: deploy
+  dependencies:
+    - astra-build
+  needs:
+    - job: 'astra-build'
+    - job: 'astra-leak-test'
+    - job: 'astra-unit-test'
+  script:
+    - ./calc
+  artifacts:
+    name: "astra-deploy-result"
+    paths:
+      - ./calc
+  tags:
+    - astra
