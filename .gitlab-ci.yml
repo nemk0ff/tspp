@@ -1,10 +1,10 @@
 stages:
-    - build
-    - test
-    - deploy
-    - docs
-    - build-pack
-    - test-pack
+  - build
+  - test
+  - deploy
+  - docs
+  - build-pack
+  - test-pack
 
 astra-build:
   variables:
@@ -24,5 +24,24 @@ astra-build:
       - ./test
       - ./leak_test
     expire_in: 1 week
+  tags:
+    - astra
+
+
+astra-unit-test:
+  stage: test
+  dependencies:
+    - astra-build
+  needs: [ "astra-build" ]
+  script:
+    - ./test --gtest_output="xml:report.xml"
+    - echo "Тесты завершены с кодом $?"
+  artifacts:
+    when: always
+    name: "astra_test_results"
+    paths:
+      - ./report.xml
+    reports:
+      junit: report.xml
   tags:
     - astra
