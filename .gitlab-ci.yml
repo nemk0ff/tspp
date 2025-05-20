@@ -134,7 +134,7 @@ redos-unit-test:
     - redos-build
   needs: ["redos-build"]
   script:
-    - ./test --gtest_output="xlm:report.xml"
+    - ./test --gtest_output="xml:report.xml"
   artifacts:
     when: always
     name: "redos_test_results"
