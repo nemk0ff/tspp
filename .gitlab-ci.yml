@@ -69,3 +69,40 @@ astra-deploy:
       - ./calc
   tags:
     - astra
+
+astra-package:
+  stage: build-pack
+  dependencies:
+    - astra-deploy
+  needs: [ "astra-deploy" ]
+  script:
+    - mv ./calc calculator
+    - mkdir calc
+    - cd calc
+    - mkdir bin
+    - mkdir etc
+    - mv ../calculator bin/calc
+    - mv ../Packages/calc.conf etc
+    - mkdir DEBIAN
+    - mv ../Packages/control DEBIAN
+    - cd ../
+    - dpkg-deb --build calc
+  artifacts:
+    name: "astra-package-result"
+    paths:
+      - ./calc.deb
+  tags:
+    - astra
+
+
+  astra-package-test:
+    stage: test-pack
+    dependencies:
+      - astra-package
+    needs: [ "astra-package" ]
+    script:
+      - apt install ./calc.deb -y
+      - dpkg-query -L calc
+      - calc
+    tags:
+      - astra
