@@ -27,12 +27,11 @@ astra-build:
   tags:
     - astra
 
-
 astra-unit-test:
   stage: test
   dependencies:
     - astra-build
-  needs: [ "astra-build" ]
+  needs: ["astra-build"]
   script:
     - ./test --gtest_output="xml:report.xml"
   artifacts:
@@ -47,7 +46,7 @@ astra-leak-test:
   stage: test
   dependencies:
     - astra-build
-  needs: [ "astra-build" ]
+  needs: ["astra-build"]
   script:
     - ./leak_test
   tags:
@@ -74,7 +73,7 @@ astra-package:
   stage: build-pack
   dependencies:
     - astra-deploy
-  needs: [ "astra-deploy" ]
+  needs: ["astra-deploy"]
   script:
     - mv ./calc calculator
     - mkdir calc
@@ -95,14 +94,14 @@ astra-package:
     - astra
 
 
-  astra-package-test:
-    stage: test-pack
-    dependencies:
-      - astra-package
-    needs: [ "astra-package" ]
-    script:
-      - apt install ./calc.deb -y
-      - dpkg-query -L calc
-      - calc
-    tags:
-      - astra
+astra-package-test:
+  stage: test-pack
+  dependencies:
+    - astra-package
+  needs: ["astra-package"]
+  script:
+    - apt install ./calc.deb -y
+    - dpkg-query -L calc
+    - calc
+  tags:
+    - astra
