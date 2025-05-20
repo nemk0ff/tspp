@@ -126,3 +126,19 @@ redos-build:
     expire_in: 1 week
   tags:
     - redos
+
+
+redos-unit-test:
+  stage: test
+  dependencies:
+    - redos-build
+  needs: ["redos-build"]
+  script:
+    - ./test --gtest_output="xlm:report.xml"
+  artifacts:
+    when: always
+    name: "redos_test_results"
+    paths:
+      - ./report.xml
+  tags:
+    - redos
