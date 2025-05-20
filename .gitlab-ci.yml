@@ -27,21 +27,17 @@ astra-build:
   tags:
     - astra
 
-
 astra-unit-test:
   stage: test
   dependencies:
     - astra-build
-  needs: [ "astra-build" ]
+  needs: ["astra-build"]
   script:
     - ./test --gtest_output="xml:report.xml"
-    - echo "Тесты завершены с кодом $?"
   artifacts:
     when: always
     name: "astra_test_results"
     paths:
       - ./report.xml
-    reports:
-      junit: report.xml
   tags:
     - astra
