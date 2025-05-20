@@ -46,7 +46,7 @@ astra-leak-test:
   stage: test
   dependencies:
     - astra-build
-  needs: [ "astra-buld" ]
+  needs: [ "astra-build" ]
   script:
     - ./leak_test
   tags:
