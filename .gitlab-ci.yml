@@ -81,9 +81,9 @@ astra-package:
     - mkdir bin
     - mkdir etc
     - mv ../calculator bin/calc
-    - mv ../Packages/calc.conf etc
+    - mv ../packages/calc.conf etc
     - mkdir DEBIAN
-    - mv ../Packages/control DEBIAN
+    - mv ../packages/control DEBIAN
     - cd ../
     - dpkg-deb --build calc
   artifacts:
