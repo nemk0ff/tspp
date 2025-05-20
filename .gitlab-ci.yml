@@ -142,3 +142,30 @@ redos-unit-test:
       - ./report.xml
   tags:
     - redos
+
+redos-leak-test:
+  stage: test
+  dependencies:
+    - redos-build
+  needs: ["redos-build"]
+  script:
+    - ./leak_test
+  tags:
+    - redos
+
+redos-deploy:
+  stage: deploy
+  dependencies:
+    - redos-build
+  needs:
+    - job: 'redos-build'
+    - job: 'redos-leak-test'
+    - job: 'redos-unit-test'
+  script:
+    - ./cacl
+  artifacts:
+    name: "redos-deploy-result"
+    paths:
+      - ./calc
+  tags:
+    - redos
