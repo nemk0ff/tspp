@@ -2,7 +2,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive  # Гарантирует рекурсивное клонирование подмодулей
 
 stages:
-  - prepare  # Новый этап для подготовки зависимостей
+  - prepare
   - build
   - test
   - deploy
@@ -11,22 +11,48 @@ stages:
   - test-pack
 
 ##############################################
-# Этап подготовки (сборка GoogleTest)
+# Этап подготовки (добавление googletest)
 ##############################################
-prepare-gtest:
+ensure-submodule:
   stage: prepare
   script:
-    - git submodule update --init --recursive  # Явная инициализация подмодулей
-    - ls -la  # Проверка наличия googletest
-    - cd googletest && mkdir -p build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release ..
-    - make -j4
+    # Проверяем наличие подмодуля
+    - if [ ! -d "googletest" ]; then
+      git submodule add https://github.com/google/googletest.git googletest;
+      fi
+    # Инициализируем и обновляем подмодули
+    - git submodule update --init --recursive
+    # Проверяем содержимое
+    - ls -la
+    - ls -la googletest || true
   artifacts:
     paths:
-      - googletest/build/lib  # Сохраняем собранные библиотеки
+      - googletest/
     expire_in: 1 week
   tags:
     - astra
+    - redos
+
+##############################################
+# Сборка GoogleTest
+##############################################
+build-gtest:
+  stage: prepare
+  needs: ["ensure-submodule"]
+  script:
+    - cd googletest
+    - mkdir -p build && cd build
+    - cmake -DCMAKE_BUILD_TYPE=Release ..
+    - make -j4
+    # Проверяем наличие библиотек
+    - ls -la lib/
+  artifacts:
+    paths:
+      - googletest/build/lib/
+    expire_in: 1 week
+  tags:
+    - astra
+    - redos
 
 ##############################################
 # Сборка проекта (Astra)
