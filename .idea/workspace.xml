@@ -12,9 +12,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f7be8ca-f1aa-46be-b948-8744e4ed99a9" name="Changes" comment="поправил gitignore">
-      <change beforePath="$PROJECT_DIR$/googletest/test" beforeDir="false" />
-    </list>
+    <list default="true" id="0f7be8ca-f1aa-46be-b948-8744e4ed99a9" name="Changes" comment="поправил gitignore" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,7 +105,7 @@
       <workItem from="1747517356924" duration="11571000" />
       <workItem from="1747687726985" duration="2285000" />
       <workItem from="1747690059136" duration="26209000" />
-      <workItem from="1747957738973" duration="12145000" />
+      <workItem from="1747957738973" duration="12457000" />
     </task>
     <task id="LOCAL-00005" summary="refactoring + checkstyle">
       <option name="closed" value="true" />
