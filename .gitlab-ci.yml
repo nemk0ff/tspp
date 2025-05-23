@@ -1,3 +1,4 @@
+
 variables:
   GIT_SUBMODULE_STRATEGY: recursive  # Гарантирует рекурсивное клонирование подмодулей
 
@@ -59,14 +60,12 @@ build-gtest:
 ##############################################
 astra-build:
   stage: build
-  dependencies:
-    - prepare-gtest  # Зависимость от этапа подготовки
   needs: ["build-gtest"]
   before_script:
     - apt-get update -qq
-    - apt-get install -y build-essential g++  # Установка компилятора
+    - apt-get install -y build-essential g++
   script:
-    - make all  # Сборка через Makefile
+    - make all
   artifacts:
     paths:
       - ./calc
@@ -76,18 +75,17 @@ astra-build:
   tags:
     - astra
 
+##############################################
+# Тестирование (Astra)
+##############################################
 astra-unit-test:
   stage: test
-  dependencies:
-    - astra-build
   needs: ["astra-build"]
   script:
     - ./test --gtest_output="xml:report.xml"
   artifacts:
-    when: always
-    name: "astra_test_results"
-    paths:
-      - ./report.xml
+    reports:
+      junit: report.xml
   tags:
     - astra
 
