@@ -1,16 +1,16 @@
 /**
  * @file test.h
  * @author Nemkov Daniil
- * @brief Заголовочный файл, необходимый для инициализации библиотеки тестов googletest
+ * @brief ╨Ч╨░╨│╨╛╨╗╨╛╨▓╨╛╤З╨╜╤Л╨╣ ╤Д╨░╨╣╨╗, ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╤Л╨╣ ╨┤╨╗╤П ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╨╕ ╨▒╨╕╨▒╨╗╨╕╨╛╤В╨╡╨║╨╕ ╤В╨╡╤Б╤В╨╛╨▓ googletest
  * @date 23.05.2025
  */
 #pragma once
 #include <gtest/gtest.h>
 #include <iostream>
 
-//! \brief Класс, описывающий тесты для ExpressionParser
+//! \brief ╨Ъ╨╗╨░╤Б╤Б, ╨╛╨┐╨╕╤Б╤Л╨▓╨░╤О╤Й╨╕╨╣ ╤В╨╡╤Б╤В╤Л ╨┤╨╗╤П ExpressionParser
 class ExpressionParserTest : public testing::Test {
 protected:
-    //! \brief Допустимая погрешность при вычислениях
+    //! \brief ╨Ф╨╛╨┐╤Г╤Б╤В╨╕╨╝╨░╤П ╨┐╨╛╨│╤А╨╡╤И╨╜╨╛╤Б╤В╤М ╨┐╤А╨╕ ╨▓╤Л╤З╨╕╤Б╨╗╨╡╨╜╨╕╤П╤Е
     double precision = 1e-5;
 };

@@ -1,7 +1,7 @@
 /**
  * @file test.cpp
  * @author Nemkov Daniil
- * @brief Файл исходных кодов тестов класса ExpressionParser, использующий библиотеку googletest
+ * @brief ╨д╨░╨╣╨╗ ╨╕╤Б╤Е╨╛╨┤╨╜╤Л╤Е ╨║╨╛╨┤╨╛╨▓ ╤В╨╡╤Б╤В╨╛╨▓ ╨║╨╗╨░╤Б╤Б╨░ ExpressionParser, ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╤О╤Й╨╕╨╣ ╨▒╨╕╨▒╨╗╨╕╨╛╤В╨╡╨║╤Г googletest
  * @date 23.05.2025
  */
 #include <gtest/gtest.h>
