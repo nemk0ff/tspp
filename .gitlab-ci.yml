@@ -1,4 +1,8 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive  # Гарантирует рекурсивное клонирование подмодулей
+
 stages:
+  - prepare  # Новый этап для подготовки зависимостей
   - build
   - test
   - deploy
@@ -6,19 +10,38 @@ stages:
   - build-pack
   - test-pack
 
-astra-build:
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  stage: build
+##############################################
+# Этап подготовки (сборка GoogleTest)
+##############################################
+prepare-gtest:
+  stage: prepare
   script:
-    - cd googletest
-    - cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-    - cd build
-    - make -j 4
-    - cd ../../
-    - make all
+    - git submodule update --init --recursive  # Явная инициализация подмодулей
+    - ls -la  # Проверка наличия googletest
+    - cd googletest && mkdir -p build && cd build
+    - cmake -DCMAKE_BUILD_TYPE=Release ..
+    - make -j4
   artifacts:
-    name: "astra_build_result"
+    paths:
+      - googletest/build/lib  # Сохраняем собранные библиотеки
+    expire_in: 1 week
+  tags:
+    - astra
+
+##############################################
+# Сборка проекта (Astra)
+##############################################
+astra-build:
+  stage: build
+  dependencies:
+    - prepare-gtest  # Зависимость от этапа подготовки
+  needs: ["prepare-gtest"]
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y build-essential g++  # Установка компилятора
+  script:
+    - make all  # Сборка через Makefile
+  artifacts:
     paths:
       - ./calc
       - ./test
