@@ -13,7 +13,7 @@ arctan, exp, sqrt, log, log10.
 библиотеки C++:
 
 - functional
-
+- 
 - iostream
 - stack
 - string
