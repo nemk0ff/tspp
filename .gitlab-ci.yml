@@ -61,7 +61,7 @@ astra-build:
   stage: build
   dependencies:
     - prepare-gtest  # Зависимость от этапа подготовки
-  needs: ["prepare-gtest"]
+  needs: ["build-gtest"]
   before_script:
     - apt-get update -qq
     - apt-get install -y build-essential g++  # Установка компилятора
