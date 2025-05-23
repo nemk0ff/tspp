@@ -32,18 +32,16 @@ ensure-submodule:
 build-gtest:
   stage: prepare
   needs: ["ensure-submodule"]
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y g++-9  # Установка более новой версии GCC
   script:
     - cd googletest
     - mkdir -p build && cd build
-    - cmake -DCMAKE_BUILD_TYPE=Release ..
+    - cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON ..
     - make -j4
-    - ls -la lib/
-  artifacts:
-    paths:
-      - googletest/build/lib/
-    expire_in: 1 week
   tags:
-    - astra  # Только для astra
+    - astra
 
 ##############################################
 # RED OS подготовка (отдельный этап)
@@ -51,17 +49,17 @@ build-gtest:
 prepare-redos:
   stage: prepare
   script:
-    - git submodule update --init --recursive
-    - cd googletest
-    - mkdir -p build && cd build
-    - cmake ..
-    - make -j4
+    - if [ ! -d "googletest" ]; then
+      git submodule add https://github.com/google/googletest.git googletest;
+      fi
+    - git submodule update --init --recursive --force
+    - ls -la googletest || true
   artifacts:
     paths:
-      - googletest/build/lib/
+      - googletest/
     expire_in: 1 week
   tags:
-    - redos  # Только для redos
+    - redos
 
 ##############################################
 # Сборка проекта
