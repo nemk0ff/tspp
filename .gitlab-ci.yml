@@ -204,3 +204,22 @@ redos-package-test:
     - calc
   tags:
     - redos
+
+build-docs:
+  stage: docs
+  needs:
+    - job: 'redos-unit-test'
+    - job: 'astra-unit-test'
+    - job: 'astra-leak-test'
+    - job: 'redos-leak-test'
+  before_script:
+    - sudo apt-get update
+    - sudo apt-get install doxygen -y
+  script:
+    - doxygen Doxyfile
+  artifacts:
+    name: "docs"
+    paths:
+      - ./html
+  tags:
+    - astra
