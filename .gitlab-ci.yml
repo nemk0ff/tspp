@@ -182,9 +182,9 @@ redos-package:
     - rpmdev-setuptree && find /root
     - mkdir calc-1.0.0
     - mv calc calc-1.0.0
-    - tar --create --file calc-1.0.0.tar.zg calc-1.0.0
-    - mv calc-1.0.0.tar.zg /root/rpmbuild/SOURCES
-    - mv packages/calc.spec /root/rpmbuild/SPECS/calc.spec
+    - tar --create --file calc-1.0.0.tar.gz calc-1.0.0
+    - mv calc-1.0.0.tar.gz /root/rpmbuild/SOURCES
+    - mv Packages/calc.spec /root/rpmbuild/SPECS/calc.spec
     - rpmbuild -ba /root/rpmbuild/SPECS/calc.spec
   artifacts:
     name: "redos-package-result"
