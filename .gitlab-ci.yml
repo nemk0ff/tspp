@@ -134,6 +134,8 @@ redos-unit-test:
     name: "redos_test_results"
     paths:
       - ./report.xml
+    reports:
+      junit: ./report.xml
   tags:
     - redos
 
