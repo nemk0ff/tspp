@@ -1,8 +1,4 @@
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-
 stages:
-  - prepare
   - build
   - test
   - deploy
@@ -10,85 +6,39 @@ stages:
   - build-pack
   - test-pack
 
-##############################################
-# Общие этапы подготовки (только для astra)
-##############################################
-ensure-submodule:
-  stage: prepare
-  script:
-    - if [ ! -d "googletest" ]; then
-      git submodule add https://github.com/google/googletest.git googletest;
-      fi
-    - git submodule update --init --recursive
-    - ls -la
-    - ls -la googletest || true
-  artifacts:
-    paths:
-      - googletest/
-    expire_in: 1 week
-  tags:
-    - astra  # Только для astra
-
-build-gtest:
-  stage: prepare
-  needs: ["ensure-submodule"]
-  before_script:
-    - apt-get update -qq
-    - apt-get install -y g++-9  # Установка более новой версии GCC
+astra-build:
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  stage: build
   script:
     - cd googletest
-    - mkdir -p build && cd build
-    - cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_CXX_STANDARD_REQUIRED=ON ..
-    - make -j4
-  tags:
-    - astra
-
-##############################################
-# RED OS подготовка (отдельный этап)
-##############################################
-prepare-redos:
-  stage: prepare
-  script:
-    - if [ ! -d "googletest" ]; then
-      git submodule add https://github.com/google/googletest.git googletest;
-      fi
-    - git submodule update --init --recursive --force
-    - ls -la googletest || true
-  artifacts:
-    paths:
-      - googletest/
-    expire_in: 1 week
-  tags:
-    - redos
-
-##############################################
-# Сборка проекта
-##############################################
-astra-build:
-  stage: build
-  needs: ["build-gtest"]
-  before_script:
-    - apt-get update -qq
-    - apt-get install -y build-essential g++
-  script:
+    - cmake -S . -B build
+    - cd build
+    - make -j 4
+    - cd ../../
     - make all
   artifacts:
+    name: "astra_build-result"
     paths:
       - ./calc
       - ./test
       - ./leak_test
-    expire_in: 1 week
   tags:
     - astra
 
 redos-build:
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   stage: build
-  needs: ["prepare-redos"]
-  before_script:
-    - dnf install -y gcc-c++ make
   script:
+    - cd googletest
+    - cmake -S . -B build
+    - cd build
+    - make -j 4
+    - cd ../../
     - make all
   artifacts:
+    name: "redos_build_result"
     paths:
       - ./calc
       - ./test
@@ -97,9 +47,7 @@ redos-build:
   tags:
     - redos
 
-##############################################
-# Тестирование (Astra)
-##############################################
+
 astra-unit-test:
   stage: test
   needs: ["astra-build"]
