@@ -192,3 +192,15 @@ redos-package:
       - ./x86_64/calc-1.0.0-1.el7.x86_64.rpm
   tags:
     - redos
+
+redos-package-test:
+  stage: test-pack
+  dependencies:
+    - redos-package
+  needs: ["redos-package"]
+  script:
+    - dnf install ./x86_64/calc-1.0.0-1.el7.x86_64.rpm -y
+    - rpm -ql ./x86_64/calc-1.0.0-1.el7.x86_64.rpm
+    - calc
+  tags:
+    - redos
