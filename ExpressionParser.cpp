@@ -1,6 +1,18 @@
+/**
+ * @file ExpressionParser.cpp
+ * @author Nemkov Daniil
+ * @brief Файл исходного кода парсера-калькулятора математических выражений
+ * рекурсивного спуска
+ * @date 23.05.2025
+ */
+
 #include "ExpressionParser.h"
 
-void replace_all(std::string &s, std::string const &toReplace, std::string const &replaceWith) {
+//! \breif Вспомогательная функция для замены всех вхождений в строку
+//! \param s Исходная строка (будет изменена по ходу)
+//! \param toReplace Паттерн для замены
+//! \param replaceWith На что заменять
+void replace_all(std::string& s, std::string const& toReplace, std::string const& replaceWith) {
     std::string buf;
     std::size_t pos = 0;
     std::size_t prevPos;
@@ -314,7 +326,7 @@ void ExpressionParser::D() {
     values.push(res);
 }
 
-long double ExpressionParser::parse(const std::string &s_) {
+long double ExpressionParser::parse(const std::string& s_) {
     s = "(" + s_ + ")";
     replace_all(s, " ", "");
     cur_index = 0;

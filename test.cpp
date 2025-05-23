@@ -1,3 +1,9 @@
+/**
+ * @file test.cpp
+ * @author Nemkov Daniil
+ * @brief Файл исходных кодов тестов класса ExpressionParser, использующий библиотеку googletest
+ * @date 23.05.2025
+ */
 #include <gtest/gtest.h>
 #include "test.h"
 #include "ExpressionParser.h"

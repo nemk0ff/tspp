@@ -1,13 +1,31 @@
+/**
+ * @file math.cpp
+ * @author Nemkov Daniil
+ * @brief Файл исходного кода, содержащий реализацию математических функций
+ * @date 23.05.2025
+ */
+
 #include <functional>
 #include "math.h"
 
+//! \brief Константа PI для нужд функций
 constexpr value_t PI = 3.141592653589793238462643383279;
+//! \brief Константа ln(2) для нужд функций
 constexpr value_t LN2 = 0.693147180559945309417232121458;
 
+//! \brief Функция, вычисляющая значение факториала n!
+//! \param n Аргумент
+//! \return Значение факториала n!
 constexpr value_t factorial(int n) { return (n == 0 ? 1 : factorial(n - 1) * n); }
 
 value_t my_abs(value_t x) { return (x < 0 ? -x : x); }
 
+//! \brief Функция, вычисляющая сумму первых cnt членов ряда Тейлора в точке x
+//! c центром разложения в нуле и коэффициентами, вычисляемыми с помощью функции koef
+//! \param koef Функция, возвращающая коэффициент по его номеру
+//! \param x Точка, в которой вычисляется ряд
+//! \param cnt Число слагаемых
+//! \return Значение ряда Тейлора
 value_t taylor_series_calc(std::function<value_t(int)> koef, value_t x, int cnt = 100) {
     value_t result = 0;
     value_t x_power = 1;
@@ -55,6 +73,10 @@ value_t log(value_t x) {
 
 value_t log10(value_t x) { return log(x) / log(10); }
 
+//! \brief Функция, возводящая число x в положительную степень n
+//! \param x Число, которое возводится в степень
+//! \param n Положительная степень n
+//! \return x^n
 value_t bpow(value_t x, long long n) {
     if (n == 0) {
         return 1;
@@ -88,6 +110,9 @@ value_t pow(value_t base, value_t exponent) {
 
 value_t sqrt(value_t x) { return pow(x, 1.0L / 2); }
 
+//! \brief Функция, уменьшающая аргумент тригонометрической функции дло промежутка [-pi;pi]
+//! \param x Изначальный аргумент
+//! \return (x - k * 2 * pi), где k такое, чтобы это значение попадало в нужной промежуток
 value_t trig_arg_reduce(value_t x) {
     while (abs(x) - 2 * PI > 0) {
         value_t k = 1.0L * static_cast<long long>(abs(x) / (2 * PI));
